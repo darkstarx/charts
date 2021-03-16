@@ -67,6 +67,9 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
   /// Whether or not to draw leader lines for labels placed outside the arcs.
   final bool showLeaderLines;
 
+  /// Whether to apply max constraint to the label width.
+  final bool constraintLabels;
+
   /// Render the labels on top of series data.
   @override
   final bool renderAbove = true;
@@ -78,6 +81,7 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
       this.labelPosition = _defaultLabelPosition,
       this.labelPadding = _defaultLabelPadding,
       this.showLeaderLines = _defaultShowLeaderLines,
+      this.constraintLabels = true,
       Color leaderLineColor})
       : insideLabelStyleSpec = insideLabelStyleSpec ?? _defaultInsideLabelStyle,
         outsideLabelStyleSpec =
@@ -184,15 +188,19 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
       // Set the max width and text style.
       if (calculatedLabelPosition == ArcLabelPosition.inside) {
         labelElement.textStyle = datumInsideLabelStyle;
-        labelElement.maxWidth = insideArcWidth;
+        if (constraintLabels) {
+          labelElement.maxWidth = insideArcWidth;
+        }
       } else {
         // calculatedLabelPosition == LabelPosition.outside
         labelElement.textStyle = datumOutsideLabelStyle;
-        labelElement.maxWidth = outsideArcWidth;
+        if (constraintLabels) {
+          labelElement.maxWidth = outsideArcWidth;
+        }
       }
 
       // Only calculate and draw label if there's actually space for the label.
-      if (labelElement.maxWidth > 0) {
+      if (labelElement.maxWidth == null || labelElement.maxWidth > 0) {
         // Calculate the start position of label based on [labelAnchor].
         if (calculatedLabelPosition == ArcLabelPosition.inside) {
           _drawInsideLabel(canvas, arcElements, labelElement, centerAngle);
@@ -272,7 +280,10 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
 
     final labelPoint = Point<double>(
         arcElements.center.x + labelRadius * cos(centerAngle),
-        arcElements.center.y + labelRadius * sin(centerAngle));
+        arcElements.center.y + (
+            labelRadius + outsideLabelStyleSpec.fontSize / 2
+        ) * sin(centerAngle)
+    );
 
     // Use the label's chart quandrant to determine whether it's rendered to the
     // right or left.
@@ -304,7 +315,9 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
       // Shift the label horizontally by the length of the leader line.
       labelX = (labelX + tailX).round();
 
-      labelElement.maxWidth = (labelElement.maxWidth - tailX).round();
+      if (labelElement.maxWidth != null) {
+        labelElement.maxWidth = (labelElement.maxWidth - tailX).round();
+      }
     }
 
     canvas.drawText(labelElement, labelX, labelY);
