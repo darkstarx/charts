@@ -18,7 +18,7 @@ dependencies:
     git:
       url: git@github.com:darkstarx/charts.git
       path: charts_common
-      ref: master
+      ref: for_flutter1
   collection: ^1.14.5
   flutter:
     sdk: flutter
