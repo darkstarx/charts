@@ -29,7 +29,7 @@ import '../simple_ordinal_scale.dart' show SimpleOrdinalScale;
 import '../static_tick_provider.dart' show StaticTickProvider;
 import '../tick_formatter.dart' show OrdinalTickFormatter;
 import 'axis_spec.dart'
-    show AxisSpec, TickProviderSpec, TickFormatterSpec, ScaleSpec, RenderSpec;
+    show AxisSpec, TickProviderSpec, TickFormatterSpec, ScaleSpec;
 import 'tick_spec.dart' show TickSpec;
 
 /// [AxisSpec] specialized for ordinal/non-continuous axes typically for bars.
@@ -51,19 +51,13 @@ class OrdinalAxisSpec extends AxisSpec<String> {
   ///     formatted.
   /// [showAxisLine] override to force the axis to draw the axis line.
   const OrdinalAxisSpec({
-    RenderSpec<String>? renderSpec,
-    OrdinalTickProviderSpec? tickProviderSpec,
-    OrdinalTickFormatterSpec? tickFormatterSpec,
-    bool? showAxisLine,
-    OrdinalScaleSpec? scaleSpec,
+    super.renderSpec,
+    super.tickProviderSpec,
+    super.tickFormatterSpec,
+    super.showAxisLine,
+    super.scaleSpec,
     this.viewport,
-  }) : super(
-          renderSpec: renderSpec,
-          tickProviderSpec: tickProviderSpec,
-          tickFormatterSpec: tickFormatterSpec,
-          showAxisLine: showAxisLine,
-          scaleSpec: scaleSpec,
-        );
+  });
 
   @override
   void configure(Axis<String> axis, ChartContext context,

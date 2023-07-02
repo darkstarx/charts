@@ -129,10 +129,9 @@ abstract class BaseCartesianRenderer<D> extends BaseSeriesRenderer<D>
       // Only add the measure values for datum who's domain is within the
       // domainAxis viewport.
       final startIndex =
-          findNearestViewportStart(domainAxis, domainFn, series.data);
+        findNearestViewportStart(domainAxis, domainFn, series.data);
       final endIndex =
-          findNearestViewportEnd(domainAxis, domainFn, series.data);
-
+        findNearestViewportEnd(domainAxis, domainFn, series.data);
       addMeasureValuesFor(series, measureAxis, startIndex, endIndex);
     });
   }
