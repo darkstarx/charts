@@ -36,11 +36,10 @@ class FakeCartesianRenderer extends BaseCartesianRenderer {
   List<DatumDetails> getNearestDatumDetailPerSeries(
     Point<double> chartPoint,
     bool byDomain,
-    Rectangle<int> boundsOverride, {
-    selectOverlappingPoints = false,
-    selectExactEventLocation = false,
-  }) =>
-      null;
+    Rectangle<int>? boundsOverride, {
+    bool selectOverlappingPoints = false,
+    bool selectExactEventLocation = false,
+  }) => const [];
 
   @override
   void paint(ChartCanvas canvas, double animationPercent) {}
@@ -49,12 +48,11 @@ class FakeCartesianRenderer extends BaseCartesianRenderer {
   void update(List<ImmutableSeries> seriesList, bool isAnimating) {}
 
   @override
-  SymbolRenderer get symbolRenderer => null;
+  SymbolRenderer get symbolRenderer => RoundedRectSymbolRenderer();
 
   @override
   DatumDetails addPositionToDetailsForSeriesDatum(
       DatumDetails details, SeriesDatum seriesDatum) {
-    assert(details != null);
     return details;
   }
 }

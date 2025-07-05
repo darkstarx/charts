@@ -24,7 +24,6 @@ import 'package:charts_common/common.dart' as common
         SliderListenerCallback,
         SliderStyle,
         SymbolRenderer;
-import 'package:flutter/widgets.dart' show hashValues;
 import 'package:meta/meta.dart' show immutable;
 
 import '../chart_behavior.dart' show ChartBehavior, GestureType;
@@ -191,8 +190,8 @@ class Slider<D> extends ChartBehavior<D> {
   }
 
   @override
-  int get hashCode {
-    return hashValues(eventTrigger, handleRenderer, initialDomainValue, roleId,
-        snapToDatum, style, layoutPaintOrder);
-  }
+  int get hashCode => Object.hash(
+    eventTrigger, handleRenderer, initialDomainValue, roleId,
+    snapToDatum, style, layoutPaintOrder,
+  );
 }

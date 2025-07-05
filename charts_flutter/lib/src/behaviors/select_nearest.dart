@@ -92,23 +92,18 @@ class SelectNearest<D> extends ChartBehavior<D> {
     switch (eventTrigger) {
       case common.SelectionTrigger.tap:
         desiredGestures..add(GestureType.onTap);
-        break;
       case common.SelectionTrigger.tapAndDrag:
         desiredGestures
           ..add(GestureType.onTap)
           ..add(GestureType.onDrag);
-        break;
       case common.SelectionTrigger.pressHold:
       case common.SelectionTrigger.longPressHold:
         desiredGestures
           ..add(GestureType.onTap)
           ..add(GestureType.onLongPress)
           ..add(GestureType.onDrag);
-        break;
       case common.SelectionTrigger.hover:
-      default:
         desiredGestures..add(GestureType.onHover);
-        break;
     }
     return desiredGestures;
   }
